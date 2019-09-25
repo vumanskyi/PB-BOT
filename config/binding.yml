@@ -1,0 +1,3 @@
+services:
+  \PB\Config\ConfigInterface: \PB\Config\EnvConfig
+  \PB\Library\Requests\RequestInterface: \PB\Library\Requests\Curl
