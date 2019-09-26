@@ -1,8 +1,12 @@
 <?php
 namespace PB;
 
+use PB\Config\ConfigInterface;
 use PB\Contracts\Application;
 use PB\Contracts\Kernel as BaseKernel;
+use PB\Validation\SapiValidation;
+use PB\Validation\Validation;
+use PB\Validation\WebValidation;
 
 class Kernel implements BaseKernel
 {
@@ -11,6 +15,12 @@ class Kernel implements BaseKernel
      * @var Application
      */
     private $app;
+
+    /**
+     * @var Validation
+     */
+    private $validation;
+
 
     /**
      * Kernel constructor.
@@ -32,16 +42,38 @@ class Kernel implements BaseKernel
     }
 
     /**
+     * @return Validation
+     */
+    public function getValidation(): Validation
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param Validation $validation
+     */
+    public function setValidation(Validation $validation): void
+    {
+        $this->validation = $validation;
+    }
+
+    /**
      * Entry point of application
      * Script run here
      */
     public function execution()
     {
-        if ($this->isSAPI()) {
-            // cli
+        if (Validation::isSAPI()) {
+            //logic for sapi
+            $validation = new SapiValidation();
         } else {
-            // web
+            $validation = new WebValidation();
         }
+
+        $validation->setConfig(
+            $this->getApplication()->getBind(ConfigInterface::class)
+        );
+
         $this->getApplication()->get('Logger')->info('test message');
     }
 
@@ -52,23 +84,5 @@ class Kernel implements BaseKernel
     public function getDevEnvironment()
     {
        return getenv('APP_ENV');
-    }
-
-    /**
-     * This mean that where is application running ?
-     * SLI or from web browser
-     */
-    public function getEnvironment()
-    {
-        return $this->isSAPI() ? 'cli' : 'web';
-    }
-
-    /**
-     * Check if this is cli env
-     * @return array
-     */
-    public function isSAPI(): bool
-    {
-        return PHP_SAPI === 'cli';
     }
 }

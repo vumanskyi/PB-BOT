@@ -22,10 +22,4 @@ interface Kernel
      * There ara only the next options: test, dev, prod
      */
     public function getDevEnvironment();
-
-    /**
-     * This mean that where is application running ?
-     * SLI or from web browser
-     */
-    public function getEnvironment();
 }

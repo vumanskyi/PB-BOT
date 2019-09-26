@@ -7,14 +7,13 @@ use PB\Exception\FileNotFoundException;
 interface ConfigInterface extends ArrayAccess
 {
     /**
-     * Set resource
+     * @return string
      */
-    public function resource();
+    public function source(): string;
 
     /**
-     * @param string $path
-     * @throws FileNotFoundException
+     * @return array
      */
-    public function source(string $path);
+    public function data(): array;
 
 }

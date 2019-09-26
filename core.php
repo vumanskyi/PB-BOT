@@ -16,7 +16,8 @@ try {
     $dotenv = Dotenv\Dotenv::create(__DIR__);
     $dotenv->load();
 } catch (Exception $e) {
-    die('Couldn\'t load Dotenv extension: ' . $e->getMessage());
+    echo 'Couldn\'t load Dotenv extension: ' . $e->getMessage();
+    exit(1);
 }
 
 
@@ -24,13 +25,15 @@ $app = new \PB\App();
 
 $content = \Symfony\Component\Yaml\Yaml::parse(file_get_contents(CONFIG . '/binding.yml'));
 
-if (empty($content['services'])) {
+if (empty($content['services']) && empty($content['services']['bind'])) {
     throw new RuntimeException('Missed service fiend in building.yml');
 }
 
-foreach ($content['services'] as $key => $value) {
+foreach ($content['services']['bind'] as $key => $value) {
     $app->bind($key, new $value);
 }
+
+$res = $app->getBind(\PB\Library\Requests\RequestInterface::class);
 
 //Add monolog configuration
 try {
@@ -41,7 +44,8 @@ try {
             getenv('APP_ENV') === 'prod' ? Logger::INFO : Logger::DEBUG)
     );
 } catch (Exception $e) {
-    die('Couldn\'t load logger extension: ' . $e->getMessage());
+    echo 'Couldn\'t load logger extension: ' . $e->getMessage();
+    exit(1);
 }
 
 $app->addInstance('Logger', $log);

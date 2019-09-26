@@ -1,23 +1,56 @@
 <?php
 namespace PB\Config;
 
+use OutOfBoundsException;
 use PB\Exception\FileNotFoundException;
+use Symfony\Component\Yaml\Yaml;
 
-class EnvConfig implements ConfigInterface
+class YmlConfig implements ConfigInterface
 {
+    /**
+     * @var string
+     */
+    protected $source = '';
 
-    public function resource()
+    /**
+     * @var array
+     */
+    protected $data = [];
+
+    /**
+     * YmlConfig constructor.
+     * @throws FileNotFoundException
+     */
+    public function __construct()
     {
-        return 'test';
+        $this->source = CONFIG . '/fields.yml';
+        if (!file_exists($this->source)) {
+            throw new FileNotFoundException('File not found ' . $this->source);
+        }
+
+        $data = Yaml::parseFile($this->source) ?? [];
+
+        if (empty($data['fields'])) {
+            throw new OutOfBoundsException('The filed "fileds" doesn\'t found');
+        }
+
+        $this->data = $data['fields'];
     }
 
     /**
-     * @param string $path
-     * @throws FileNotFoundException
+     * @return string
      */
-    public function source(string $path)
+    public function source(): string
     {
-        // TODO: Implement source() method.
+        return $this->source;
+    }
+
+    /**
+     * @return array
+     */
+    public function data(): array
+    {
+        return $this->data;
     }
 
     /**
@@ -32,9 +65,9 @@ class EnvConfig implements ConfigInterface
      * The return value will be casted to boolean if non-boolean was returned.
      * @since 5.0.0
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
-        // TODO: Implement offsetExists() method.
+        return isset($this->data[$offset]);
     }
 
     /**
@@ -48,7 +81,7 @@ class EnvConfig implements ConfigInterface
      */
     public function offsetGet($offset)
     {
-        // TODO: Implement offsetGet() method.
+        return $this->data[$offset];
     }
 
     /**
@@ -65,7 +98,7 @@ class EnvConfig implements ConfigInterface
      */
     public function offsetSet($offset, $value)
     {
-        // TODO: Implement offsetSet() method.
+        $this->data[$offset] = $value;
     }
 
     /**
@@ -79,6 +112,6 @@ class EnvConfig implements ConfigInterface
      */
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
+        unset($this->data[$offset]);
     }
 }

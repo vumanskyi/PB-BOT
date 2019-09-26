@@ -1,4 +1,4 @@
-#Planning task
+Planning task
 --------------
 
 ####What I need

@@ -1,0 +1,7 @@
+fields:
+  sapi:
+    name: required
+    text: optional
+  web:
+    name: required
+    text: optional

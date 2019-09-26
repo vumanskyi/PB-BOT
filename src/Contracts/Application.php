@@ -58,4 +58,10 @@ interface Application
      * @return void
      */
     public function bind(string $interface, object $class);
+
+    /**
+     * @param string $interface
+     * @return bool|mixed
+     */
+    public function getBind(string $interface);
 }
