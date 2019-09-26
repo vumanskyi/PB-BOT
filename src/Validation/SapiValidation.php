@@ -31,12 +31,4 @@ class SapiValidation extends Validation
         $this->rules = $data['sapi'];
     }
 
-    /**
-     * @param array $request
-     * @return bool
-     */
-    public function validate(array $request): bool
-    {
-        // TODO: Implement validate() method.
-    }
 }

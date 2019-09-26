@@ -30,13 +30,4 @@ class WebValidation extends Validation
         $this->fields = array_keys($data['web']);
         $this->rules = $data['web'];
     }
-
-    /**
-     * @param array $request
-     * @return bool
-     */
-    public function validate(array $request): bool
-    {
-        // TODO: Implement validate() method.
-    }
 }

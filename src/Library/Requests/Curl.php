@@ -18,16 +18,12 @@ class Curl implements RequestInterface
      * @var array
      */
     private $config = [
-        CURLOPT_TIMEOUT => 10,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-
-        CURLOPT_SSL_VERIFYPEER => true,
-
-        #redirects
-        CURLOPT_FOLLOWLOCATION => 1,
-        CURLOPT_MAXREDIRS => 2,
+        CURLOPT_TIMEOUT => 60,
+        CURLOPT_RETURNTRANSFER =>  true,
+        CURLINFO_HEADER_OUT => true,
+        CURLOPT_POST => false,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_POSTFIELDS => '',
     ];
 
     /**

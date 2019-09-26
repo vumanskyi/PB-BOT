@@ -1,13 +1,14 @@
 <?php
 namespace PB\Validation;
 
-
 use PB\Config\ConfigInterface;
 
 abstract class Validation
 {
     const ENV_SAPI = 'cli';
     const ENV_WEB = 'web';
+
+    const L_REQUIRED = 'required';
 
     /**
      * @var array
@@ -23,6 +24,11 @@ abstract class Validation
      * @var ConfigInterface
      */
     protected $config;
+
+    /**
+     * @var array
+     */
+    protected $validMessage;
 
     /**
      * Get rules for environment
@@ -77,13 +83,43 @@ abstract class Validation
     }
 
     /**
+     * @param array $request
+     * @return bool
+     */
+    public function validate(array $request): bool
+    {
+        $msg = [];
+        $isValid = true;
+        foreach ($this->rules as $key => $value) {
+            if ($value == static::L_REQUIRED) {
+                if (array_key_exists($key, $request) && empty($request[$key])) {
+                    $isValid = false;
+                    $msg[$key] = 'The field is required';
+                    break;
+                } elseif (!array_key_exists($key, $request)) {
+                    $isValid = false;
+                    $msg[$key] = 'The field is required';
+                    break;
+                }
+            }
+        }
+
+        $this->validMessage = $msg;
+
+        return $isValid;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidMessage(): array
+    {
+        return $this->validMessage;
+    }
+
+    /**
      * Depend on environment. Every environment has own configuration
      */
     abstract public function operate();
 
-    /**
-     * @param array $request
-     * @return bool
-     */
-    abstract public function validate(array $request): bool;
 }
