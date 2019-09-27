@@ -21,3 +21,33 @@ List:
 ###Some propositions:
  - Add binding from yaml file
 
+
+EXAMPLE OF RESPONSE 
+```json
+{
+    "ok": true,
+    "result": [{
+        "update_id": 2,
+        "message": {
+            "message_id": 1,
+            "from": {
+                "id": 12,
+                "is_bot": false,
+                "first_name": "John",
+                "last_name": "Doe",
+                "username": "John Doe",
+                "language_code": "en"
+            },
+            "chat": {
+                "id": 12,
+                "first_name": "John",
+                "last_name": "Doe",
+                "username": "John Doe",
+                "type": "private"
+            },
+            "date": 1569509161,
+            "text": "Test"
+        }
+    }]
+}
+```

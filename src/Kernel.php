@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace PB;
 
 use PB\Config\ConfigInterface;
 use PB\Contracts\Application;
 use PB\Contracts\Kernel as BaseKernel;
 use PB\Library\Requests\RequestInterface;
+use PB\Library\Responses\ResponseInterface;
 use PB\Validation\SapiValidation;
 use PB\Validation\Validation;
 use PB\Validation\WebValidation;
@@ -64,7 +67,10 @@ class Kernel implements BaseKernel
      */
     public function execution()
     {
-        $request = ['name' => 'John', 'text' => ''];
+        //TODO - input data
+        $requestParams = ['chat_id' => 0, 'text' => 'TestMSG from pb-bot (cli)'];
+        $method = 'sendMessage';
+
         if (Validation::isSAPI()) {
             //logic for sapi
             $validation = new SapiValidation();
@@ -78,15 +84,24 @@ class Kernel implements BaseKernel
             $this->getApplication()->getBind(ConfigInterface::class)
         );
 
-        $this->getApplication()->get('Logger')->debug('Request before validation', $request);
+        $this->getApplication()->get('Logger')->debug('Request before validation', $requestParams);
         //TODO - get data from cli and web
-        if (!$validation->validate($request)) {
+        if (!$validation->validate($requestParams)) {
             //TODO add response solution
             return json_encode($validation->getValidMessage());
         }
 
-        $response = $this->getApplication()->getBind(RequestInterface::class);
-        var_dump($response);
+        if (!$validation->validateMethods($method)) {
+            //
+        }
+
+        /** @var RequestInterface $request*/
+        $request = $this->getApplication()->getBind(RequestInterface::class);
+
+        /** @var ResponseInterface $response */
+        $response = $request->get($this->getBotLink() . '/' . $method, $requestParams);
+
+        return $response->render();
     }
 
     /**
@@ -96,5 +111,14 @@ class Kernel implements BaseKernel
     public function getDevEnvironment()
     {
        return getenv('APP_ENV');
+    }
+
+    /**
+     * System link for working with bot
+     * @return string
+     */
+    protected function getBotLink(): string
+    {
+        return getenv('BOT_URL') . getenv('TOKEN');
     }
 }

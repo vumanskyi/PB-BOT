@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace PB\Contracts;
 
 
 interface Application
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.1.0';
 
     /**
      * Get current version of application

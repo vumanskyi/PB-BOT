@@ -1,4 +1,7 @@
 services:
   bind:
     PB\Config\ConfigInterface: PB\Config\YmlConfig
-    PB\Library\Requests\RequestInterface: PB\Library\Requests\Curl
+    PB\Library\Responses\ResponseInterface: PB\Library\Responses\ResponseJson
+    PB\Library\Requests\RequestInterface:
+      main: PB\Library\Requests\Curl
+      param: PB\Library\Responses\ResponseJson

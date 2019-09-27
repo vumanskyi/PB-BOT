@@ -1,6 +1,7 @@
 {
     "name": "vladumanskyi/pb-english-bot",
     "description": "Simple english bot assistant",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Vlad Umanskyi",
@@ -8,6 +9,8 @@
         }
     ],
     "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
         "symfony/yaml": "^4.3",
         "psr/http-message": "^1.0",
         "vlucas/phpdotenv": "^3.6",

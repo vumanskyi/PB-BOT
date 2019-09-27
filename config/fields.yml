@@ -1,7 +1,12 @@
 fields:
-  sapi:
-    name: required
-    text: optional
-  web:
-    name: required
-    text: optional
+  request:
+    sapi:
+      chat_id: required
+      text: required
+    web:
+      chat_id: required
+      text: required
+  #for bot
+  methods:
+    - sendMessage
+    - getUpdates

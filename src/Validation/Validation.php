@@ -1,6 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace PB\Validation;
 
+use http\Exception\InvalidArgumentException;
+use OutOfBoundsException;
 use PB\Config\ConfigInterface;
 
 abstract class Validation
@@ -107,6 +111,25 @@ abstract class Validation
         $this->validMessage = $msg;
 
         return $isValid;
+    }
+
+    /**
+     * @param string $method
+     * @return bool
+     */
+    public function validateMethods(string $method): bool
+    {
+        $methods = $this->getConfig()->data();
+
+        if (empty($methods['methods'])) {
+            throw new OutOfBoundsException('The filed "methods" doesn\'t found');
+        }
+
+        if (!in_array($method, $methods['methods'])) {
+            throw new \InvalidArgumentException('This methods is unavailable');
+        }
+
+        return true;
     }
 
     /**

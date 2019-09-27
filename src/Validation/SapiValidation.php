@@ -1,7 +1,6 @@
 <?php
 namespace PB\Validation;
 
-
 use OutOfBoundsException;
 use PB\Config\ConfigInterface;
 
@@ -23,12 +22,12 @@ class SapiValidation extends Validation
     {
         $data = $this->getConfig()->data();
 
-        if (empty($data['sapi'])) {
+        if (empty($data['request']) || empty($data['request']['sapi'])) {
             throw new OutOfBoundsException('The filed "sapi" doesn\'t found');
         }
 
-        $this->fields = array_keys($data['sapi']);
-        $this->rules = $data['sapi'];
+        $this->fields = array_keys($data['request']['sapi']);
+        $this->rules = $data['request']['sapi'];
     }
 
 }

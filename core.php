@@ -30,10 +30,13 @@ if (empty($content['services']) && empty($content['services']['bind'])) {
 }
 
 foreach ($content['services']['bind'] as $key => $value) {
-    $app->bind($key, new $value);
-}
+    if (isset($value['main']) && isset($value['param'])) {
+        $app->bind($key, new $value['main'](new $value['param']));
+    } else {
+        $app->bind($key, new $value);
+    }
 
-$res = $app->getBind(\PB\Library\Requests\RequestInterface::class);
+}
 
 //Add monolog configuration
 try {

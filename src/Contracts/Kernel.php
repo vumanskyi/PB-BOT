@@ -1,6 +1,7 @@
 <?php
-namespace PB\Contracts;
+declare(strict_types=1);
 
+namespace PB\Contracts;
 
 interface Kernel
 {
