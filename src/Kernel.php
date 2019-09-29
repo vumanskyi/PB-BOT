@@ -67,18 +67,24 @@ class Kernel implements BaseKernel
      */
     public function execution()
     {
-        //TODO - input data
-        $requestParams = ['chat_id' => 0, 'text' => 'TestMSG from pb-bot (cli)'];
-        $method = 'sendMessage';
-
         if (Validation::isSAPI()) {
             //logic for sapi
             $validation = new SapiValidation();
+            $params = getopt('m:c:t:');
+            $method = $params['m'] ?? '';
+            $requestParams = [
+                'chat_id' => $params['c'] ?? '',
+                'text'    => $params['t'] ?? '',
+            ];
         } else {
             $validation = new WebValidation();
-            //TODO - It could be Get or Post parameters
-        }
 
+            $method = $_REQUEST['method'] ?? '';
+            $requestParams = [
+                'chat_id' => $_REQUEST['chat_id'] ?? '',
+                'text'    => $_REQUEST['text'] ?? '',
+            ];
+        }
 
         $validation->setConfig(
             $this->getApplication()->getBind(ConfigInterface::class)
