@@ -1,4 +1,4 @@
-#PB BOT ASSISTANT
+# PB BOT ASSISTANT
 This is a simple bot assistant for working with customer directly via **Telegram bot**
 
 You can registry own bot with help **BotFather**
@@ -12,7 +12,7 @@ In CLI
 ```php
 php index.php -m sendMessage -c 10 -t lorem
 ```
-#####Where params are: 
+##### Where params are: 
 **-m** - name of method
 **-c** - chat ID
 **-t** - send text
