@@ -27,4 +27,6 @@ php -S 127.0.0.1
 
 Parameters can be set using GET and POST requests
 
+You can find all the available methods in config/fields.yml
+
 Enjoy):rocket:
