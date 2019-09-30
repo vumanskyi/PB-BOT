@@ -40,7 +40,7 @@ foreach ($content['services']['bind'] as $key => $value) {
 
 //Add monolog configuration
 try {
-    $log = new Logger('test');
+    $log = new Logger('main');
     $log->pushHandler(
         new StreamHandler(
             CACHE_PATH . '/' . getenv('LOG_FILE_NAME'),
