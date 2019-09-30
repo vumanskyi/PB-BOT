@@ -31,21 +31,19 @@ class WebValidation extends Validation
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function availableMethods(): string
+    public function availableMethods(): array
     {
-        //get and post
-        return '';
+        return ['GET', 'POST'];
     }
 
 
     /**
-     * @param string $method
      * @return bool
      */
-    public function isMethodAvailabel(string $method): bool
+    public function isMethodAvailable(): bool
     {
-        return in_array($method, $this->availableMethods());
+        return isset($_SERVER['REQUEST_METHOD']) && in_array($_SERVER['REQUEST_METHOD'], $this->availableMethods());
     }
 }

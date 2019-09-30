@@ -67,7 +67,6 @@ class Kernel implements BaseKernel
      */
     public function execution()
     {
-        //TODO - input data
         $requestParams = ['chat_id' => 0, 'text' => 'TestMSG from pb-bot (cli)'];
         $method = 'sendMessage';
 
@@ -76,23 +75,23 @@ class Kernel implements BaseKernel
             $validation = new SapiValidation();
         } else {
             $validation = new WebValidation();
-            //TODO - It could be Get or Post parameters
+            if (!$validation->isMethodAvailable()) {
+                throw new \RuntimeException('Invalid request method');
+            }
         }
-
 
         $validation->setConfig(
             $this->getApplication()->getBind(ConfigInterface::class)
         );
 
         $this->getApplication()->get('Logger')->debug('Request before validation', $requestParams);
-        //TODO - get data from cli and web
+
         if (!$validation->validate($requestParams)) {
-            //TODO add response solution
             return json_encode($validation->getValidMessage());
         }
 
         if (!$validation->validateMethods($method)) {
-            //
+            throw new \RuntimeException('Invalid method for request (for Bot)');
         }
 
         /** @var RequestInterface $request*/
