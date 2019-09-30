@@ -1,53 +1,30 @@
-Planning task
---------------
+# PB BOT ASSISTANT
+This is a simple bot assistant for working with customer directly via **Telegram bot**
 
-####What I need
+You can registry own bot with help **BotFather**
+![BotFather](https://cdn1.telesco.pe/file/saSarlPYml7OX11-vpcflE3ETt946fiqOJNQleSfWMxtBOfsXUiLA2lCMf_J4PQLbJzCQ10Es8U-KhscMDtetlF3ozknP_MTo-_R8JoSYwkMPQkAMmwyidjQOQ3JnDc4Ry5X7AnPwQTwukoouOD-CFalHecU7M8J1wntxr-xDVFoRxf9tJmcaKwiaJnmmLBj4U5QoJnXioBdTJ8yXV3VoiWTlr4fiSNid9iyjnNSUbO3LHdGBLchtAsRPZSiY2J6u7Qyd1o64HFrnnMQTW1FWSvZg--tJN_4KY2M9t3IxwZFpTFuShZNuGQduOfWomqTj8tjKqZkBmyJm-FEA574Bg.jpg)
 
-List:
- - Simple tools for work with telegram bot
- (without telegram package
-  PS: I don't like them)  
+The enter point is index.php file
 
-- Send not only text (words and translations) and also images, audio and video files
+You can run application in cli or in your browser 
 
-- Start bot with **/start**
-
-- Create some bots commands: **/words**, **/pictures**, etc...
-
-- Into yaml file write global configuration. Into .env file write dynamic configuration
-###Backend part which will work with db and have some frontend is going write by Symfony4 and use React for them
-
--------------------
-###Some propositions:
- - Add binding from yaml file
-
-
-EXAMPLE OF RESPONSE 
-```json
-{
-    "ok": true,
-    "result": [{
-        "update_id": 2,
-        "message": {
-            "message_id": 1,
-            "from": {
-                "id": 12,
-                "is_bot": false,
-                "first_name": "John",
-                "last_name": "Doe",
-                "username": "John Doe",
-                "language_code": "en"
-            },
-            "chat": {
-                "id": 12,
-                "first_name": "John",
-                "last_name": "Doe",
-                "username": "John Doe",
-                "type": "private"
-            },
-            "date": 1569509161,
-            "text": "Test"
-        }
-    }]
-}
+In CLI
+```php
+php index.php -m sendMessage -c 10 -t lorem
 ```
+##### Where params are: 
+**-m** - name of method
+**-c** - chat ID
+**-t** - send text
+
+In browser
+
+You can use built web server
+```php
+php -S 127.0.0.1
+```
+*127.0.0.1/?method=sendMessage&chat_id=10&text=lorem*
+
+Parameters can be set using GET and POST requests
+
+Enjoy):rocket:
